@@ -1,3 +1,5 @@
 This files includes: 
 1) The Brazil state .shp you will use to practice uploading a feature collection
+* this file is downloaded from: https://gadm.org/download_country.html (Brazil admin level 2)
 2) the CA county .shp you will use for mapping the feature collection in R
+* this file is downloaded from: https://gis.data.ca.gov/datasets/8713ced9b78a4abb97dc130a691a8695/explore
