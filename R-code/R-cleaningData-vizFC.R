@@ -1,4 +1,4 @@
-setwd('/Users/cglidden/Desktop/GEE_EEID') # change to your wd
+setwd('/Users/cglidden/Desktop/gee-eeid-wkshp-main') # change to your wd
 
 ##---- set up packages ----##
 library(dplyr)
@@ -8,7 +8,7 @@ library(sf)
 library(ggplot2)
 
 ##------------------------------- data setup (load CA county ERA5 data) -------------------------------##
-era5_data_wide <- read.csv('CA_county_monthly_temps.csv')
+era5_data_wide <- read.csv('GEE_EEID/CA_county_monthly_temps.csv')
 names(era5_data_wide) # notice each month-year is a column
 
 ##------ use pivot longer to restructure time series for mean temp ------##
@@ -38,10 +38,10 @@ ggplot(humboldt, aes(x = date_column, y = tempC_mean)) +
 
 
 ##--------------##
-ca_counties <- st_read('california_counties') |> filter(is.na(ISLAND))
+ca_counties <- st_read('shp-files/california_counties')
 
 ca_era5_shape <- ca_counties |>
-  inner_join(era5_mean_long, by = "GEOID")
+  inner_join(era5_mean_long, by = c("GEOID", "NAME"))
 
 # plot one time point: temperature in august 2022
 
@@ -53,17 +53,4 @@ ca_era5_aug22_fig <- ggplot() +
   scale_fill_gradient(low = "blue", high = "red", name = 'temp (C)') +
   ggtitle("mean air temp - August 2022") +
   theme_void()
-ggsave('ca_county_aug2022_temps.png', ca_era5_aug22_fig, dpi = 300)
-
-ca_counties_save <- ca_era5_shape |>
-  select(GEOID, COUNTY_NAM) |>
-  rename("NAME" = "COUNTY_NAM") |> distinct()
-
-
-
-
-
-
-
-
-
+ggsave('ca_county_aug2022_temps.png', ca_era5_aug22_fig, dpi = 300) # this will save in the wd but you can also make a output/results folder to organize files 
