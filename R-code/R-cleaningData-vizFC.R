@@ -38,8 +38,7 @@ ggplot(humboldt, aes(x = date_column, y = tempC_mean)) +
 
 
 ##--------------##
-ca_counties <- st_read('california_counties') |>
-ca_counties <- ca_counties %>% filter(is.na(ISLAND))
+ca_counties <- st_read('california_counties') |> filter(is.na(ISLAND))
 
 ca_era5_shape <- ca_counties |>
   inner_join(era5_mean_long, by = "GEOID")
@@ -56,9 +55,9 @@ ca_era5_aug22_fig <- ggplot() +
   theme_void()
 ggsave('ca_county_aug2022_temps.png', ca_era5_aug22_fig, dpi = 300)
 
-ca_counties_save <- ca_era5_shape %>%
-  select(GEOID, COUNTY_NAM) %>%
-  rename("NAME" = "COUNTY_NAM") %>% distinct()
+ca_counties_save <- ca_era5_shape |>
+  select(GEOID, COUNTY_NAM) |>
+  rename("NAME" = "COUNTY_NAM") |> distinct()
 
 
 
